@@ -1,6 +1,7 @@
 import React from "react";
 
 import Imagem from "../Imagem";
+import Container from "../Container";
 
 function Galeria() {
   const listaImages = [
@@ -18,13 +19,13 @@ function Galeria() {
     },
   ];
   return (
-    <div>
+    <Container>
       <div>
         <div><Imagem caminho={listaImages[0].caminho} texto={listaImages[0].texto} /></div>
         <div><Imagem caminho={listaImages[1].caminho} texto={listaImages[1].texto} /></div>
         <div><Imagem caminho={listaImages[2].caminho} texto={listaImages[2].texto} /></div>
       </div>
-    </div>
+    </Container>
   );
 }
 

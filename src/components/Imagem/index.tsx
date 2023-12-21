@@ -1,10 +1,15 @@
 import React from "react";
 
-function Imagem(props: any) {
+interface ImagemProps {
+  caminho: string,
+  texto?: string,
+}
+
+function Imagem({ caminho, texto }: ImagemProps) {
   return (
     <img
-      src={props.caminho}
-      alt={props.texto}
+      src={caminho}
+      alt={texto}
     />
   );
 }
