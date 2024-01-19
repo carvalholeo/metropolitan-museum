@@ -1,16 +1,15 @@
 import React from 'react';
 
 import Header from './components/Header';
+import Container from './components/Container';
 import Galeria from './components/Galeria';
-import Formulario from './components/Formulario';
 
 function App() {
   return (
-    <div>
+    <Container>
       <Header />
       <Galeria />
-      <Formulario />
-    </div>
+    </Container>
   );
 }
 

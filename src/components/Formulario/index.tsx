@@ -1,14 +1,10 @@
 import React, { useState, useEffect } from "react";
 
-import apiMetMuseum from '../../services/apis/api-met-museum';
-
 function Formulario() {
   const [idade, setIdade] = useState(27);
 
   // equivalente ao componentWillMount
   useEffect(function() {
-    apiMetMuseum.get('objects/436121')
-      .then(console.log)
   }, []);
 
   // equivalente à de atualização

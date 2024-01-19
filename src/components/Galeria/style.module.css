@@ -1,0 +1,17 @@
+.grade {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-gap: 1rem;
+    margin: 1rem 0;
+    padding: 0 1rem;
+    justify-items: center;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    @media (max-width: 768px) {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    @media (max-width: 480px) {
+        grid-template-columns: repeat(1, 1fr);
+    }
+}
