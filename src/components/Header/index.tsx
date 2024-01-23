@@ -1,16 +1,22 @@
 import React from 'react';
 
+import Container from '../Container';
+import Formulario from '../Formulario';
+
 function Header() {
   return (
-    <header>
-      <nav>
-        <ul>
-          <li><a href="#">Quadros novos</a></li>
-          <li><a href="#">Quadros velhos</a></li>
-          <li><a href="#">Quadros da era dos Astecas</a></li>
-        </ul>
-      </nav>
-    </header>
+    <Container>
+      <header>
+        <nav>
+          <ul>
+            <li><a href="#">Quadros novos</a></li>
+            <li><a href="#">Quadros velhos</a></li>
+            <li><a href="#">Quadros da era dos Astecas</a></li>
+          </ul>
+        </nav>
+      </header>
+      <Formulario />
+    </Container>
   );
 }
 
