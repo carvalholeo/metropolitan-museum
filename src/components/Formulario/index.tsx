@@ -27,6 +27,7 @@ function Formulario() {
   }
   const [pesquisa, setPesquisa] = useState("");
   const [executarPesquisa, setExecutarPesquisa] = useState("");
+  const [inputCalmo, setInputCalmo] = useState("");
 
   const [resultadoPesquisa, setResultadoPesquisa] = useState(listaVaziaDeObjetos);
   const [resultado, setResultado] = useState(lista);
@@ -41,14 +42,22 @@ function Formulario() {
   }
 
   useEffect(() => {
-    if (executarPesquisa.length === 0) {
+    const executaDepoisDeUmTempo = setTimeout(() => {
+      setInputCalmo(pesquisa);
+    }, 2000);
+
+    return () => clearTimeout(executaDepoisDeUmTempo);
+  }, [pesquisa]);
+
+  useEffect(() => {
+    if (inputCalmo.length === 0) {
       return;
     }
 
     async function pesquisarApi() {
       const { data } = await api.get('search', {
         params : {
-          q: executarPesquisa
+          q: inputCalmo
         }
       });
 
@@ -56,7 +65,7 @@ function Formulario() {
     }
 
     pesquisarApi();
-  }, [executarPesquisa]);
+  }, [inputCalmo]);
 
   useEffect(() => {
     if (resultadoPesquisa.objectIDs.length === 0) {
@@ -65,7 +74,7 @@ function Formulario() {
 
     async function detalheObjetos() {
       const lista = [];
-      for (let index = 0; index < 5; index++) {
+      for (let index = 0; (index < 5 || index < resultadoPesquisa.objectIDs.length); index++) {
         const id = resultadoPesquisa.objectIDs[index];
         const resposta = await api.get(`/objects/${id}`);
         lista.push(resposta.data);
