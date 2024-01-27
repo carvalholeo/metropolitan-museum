@@ -25,39 +25,37 @@ function Formulario() {
     total: 0,
     objectIDs: []
   }
-  const [pesquisa, setPesquisa] = useState("");
-  const [executarPesquisa, setExecutarPesquisa] = useState("");
-  const [inputCalmo, setInputCalmo] = useState("");
+  const [termoPesquisa, setTermoPesquisa] = useState("");
+  const [inputComDebounce, setInputComDebounce] = useState("");
 
   const [resultadoPesquisa, setResultadoPesquisa] = useState(listaVaziaDeObjetos);
   const [resultado, setResultado] = useState(lista);
 
   function handlePesquisa(evento: React.ChangeEvent<HTMLInputElement>) {
-    setPesquisa(evento.target.value);
+    setTermoPesquisa(evento.target.value);
   }
 
   function handleSubmit(evento: React.FormEvent<HTMLFormElement>) {
     evento.preventDefault();
-    setExecutarPesquisa(pesquisa);
   }
 
   useEffect(() => {
     const executaDepoisDeUmTempo = setTimeout(() => {
-      setInputCalmo(pesquisa);
+      setInputComDebounce(termoPesquisa);
     }, 2000);
 
     return () => clearTimeout(executaDepoisDeUmTempo);
-  }, [pesquisa]);
+  }, [termoPesquisa]);
 
   useEffect(() => {
-    if (inputCalmo.length === 0) {
+    if (inputComDebounce.length === 0) {
       return;
     }
 
     async function pesquisarApi() {
       const { data } = await api.get('search', {
-        params : {
-          q: inputCalmo
+        params: {
+          q: inputComDebounce
         }
       });
 
@@ -65,7 +63,7 @@ function Formulario() {
     }
 
     pesquisarApi();
-  }, [inputCalmo]);
+  }, [inputComDebounce]);
 
   useEffect(() => {
     if (resultadoPesquisa.objectIDs.length === 0) {
@@ -74,11 +72,24 @@ function Formulario() {
 
     async function detalheObjetos() {
       const lista = [];
-      for (let index = 0; (index < 5 || index < resultadoPesquisa.objectIDs.length); index++) {
+      for (let index = 0; (index < 5 && index < resultadoPesquisa.total); index++) {
         const id = resultadoPesquisa.objectIDs[index];
-        const resposta = await api.get(`/objects/${id}`);
-        lista.push(resposta.data);
+        try {
+          const resposta = await api.get(`/objects/${id}`);
+          lista.push(resposta.data);
+        } catch (error) {}
       }
+
+      // let index = 0;
+      // while (index < 5 && index < resultadoPesquisa.total) {
+      //   const id = resultadoPesquisa.objectIDs[index];
+      //   try {
+      //     const resposta = await api.get(`/objects/${id}`);
+      //     lista.push(resposta.data);
+      //   } catch (error) {}
+
+      //   index++;
+      // }
       setResultado(lista);
     }
 
@@ -93,11 +104,10 @@ function Formulario() {
           type="search"
           name="pesquisa"
           id="pesquisa"
-          value={pesquisa}
+          value={termoPesquisa}
           placeholder="Pesquise por quadros, moedas, esculturas e artes em geral"
           onChange={handlePesquisa}
         />
-        <button type="submit">Pesquisar</button>
       </form>
       {resultado.length > 0 && (
         <ul>
