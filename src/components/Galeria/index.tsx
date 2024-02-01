@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 
 import Imagem from "../Imagem";
 import Container from "../Container";
+
+import RespostaContext from "../../providers/RespostaContext";
 
 import api from "../../services/apis/api-met-museum";
 import style from './style.module.css';
@@ -24,22 +26,26 @@ function Galeria() {
   const [listaObjetos, setListaObjetos] = useState([]);
   const [listaDetalheObjeto, setListaDetalheObjeto] = useState(listaVaziaDeObjetos);
 
+  const {alterarDados, dados} = useContext(RespostaContext);
+
   useEffect(() => {
     async function buscarObjetos() {
       const resposta = await api.get('/objects');
-      setListaObjetos(resposta.data.objectIDs);
+
+      alterarDados(resposta.data);
     }
 
     buscarObjetos();
   }, []);
 
   useEffect(() =>{
-    if (listaObjetos.length === 0) return;
+    const objetos = dados.objectIDs;
+    if (objetos.length === 0) return;
 
     async function buscarDetalheObjeto() {
       const lista = [];
       for (let index = 100000; index < 100010; index++) {
-        const id = listaObjetos[index];
+        const id = objetos[index];
         const resposta = await api.get(`/objects/${id}`);
         lista.push(resposta.data);
       }
@@ -47,7 +53,7 @@ function Galeria() {
     }
 
     buscarDetalheObjeto();
-  }, [listaObjetos]);
+  }, [dados]);
 
   return (
     <Container>
