@@ -1,35 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 
 import api from "../../services/apis/api-met-museum";
-
-interface ObjectResponse {
-  objectID: number;
-  isHighlight: boolean;
-  accessionYear: string;
-  primaryImage?: string;
-  primaryImageSmall?: string;
-  additionalImages?: string[];
-  constituents: string[];
-  department: string;
-  title: string;
-}
-
-interface ObjectsIDsResponse {
-  total: number;
-  objectIDs: number[];
-}
+import RespostaContext from "../../providers/RespostaContext";
 
 function Formulario() {
-  const lista: ObjectResponse[] = [];
-  const listaVaziaDeObjetos: ObjectsIDsResponse = {
-    total: 0,
-    objectIDs: []
-  }
   const [termoPesquisa, setTermoPesquisa] = useState("");
   const [inputComDebounce, setInputComDebounce] = useState("");
 
-  const [resultadoPesquisa, setResultadoPesquisa] = useState(listaVaziaDeObjetos);
-  const [resultado, setResultado] = useState(lista);
+  const { alterarDados } = useContext(RespostaContext);
 
   function handlePesquisa(evento: React.ChangeEvent<HTMLInputElement>) {
     setTermoPesquisa(evento.target.value);
@@ -58,43 +36,11 @@ function Formulario() {
           q: inputComDebounce
         }
       });
-
-      setResultadoPesquisa(data);
+      alterarDados(data);
     }
 
     pesquisarApi();
   }, [inputComDebounce]);
-
-  useEffect(() => {
-    if (resultadoPesquisa.objectIDs.length === 0) {
-      return;
-    }
-
-    async function detalheObjetos() {
-      const lista = [];
-      for (let index = 0; (index < 5 && index < resultadoPesquisa.total); index++) {
-        const id = resultadoPesquisa.objectIDs[index];
-        try {
-          const resposta = await api.get(`/objects/${id}`);
-          lista.push(resposta.data);
-        } catch (error) {}
-      }
-
-      // let index = 0;
-      // while (index < 5 && index < resultadoPesquisa.total) {
-      //   const id = resultadoPesquisa.objectIDs[index];
-      //   try {
-      //     const resposta = await api.get(`/objects/${id}`);
-      //     lista.push(resposta.data);
-      //   } catch (error) {}
-
-      //   index++;
-      // }
-      setResultado(lista);
-    }
-
-    detalheObjetos();
-  }, [resultadoPesquisa]);
 
   return (
     <>
@@ -109,19 +55,6 @@ function Formulario() {
           onChange={handlePesquisa}
         />
       </form>
-      {resultado.length > 0 && (
-        <ul>
-          {resultado.map(objeto => {
-            return (
-              <li key={objeto.objectID}>
-                <img src={objeto.primaryImageSmall} alt={objeto.title} />
-                <p>{objeto.title}</p>
-              </li>
-            );
-          })}
-        </ul>
-      )}
-
     </>
   )
 }

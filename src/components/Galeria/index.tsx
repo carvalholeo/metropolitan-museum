@@ -23,9 +23,7 @@ interface ObjectResponse {
 function Galeria() {
   const listaVaziaDeObjetos: ObjectResponse[] = [];
 
-  const [listaObjetos, setListaObjetos] = useState([]);
   const [listaDetalheObjeto, setListaDetalheObjeto] = useState(listaVaziaDeObjetos);
-
   const {alterarDados, dados} = useContext(RespostaContext);
 
   useEffect(() => {
@@ -34,7 +32,6 @@ function Galeria() {
 
       alterarDados(resposta.data);
     }
-
     buscarObjetos();
   }, []);
 
@@ -44,7 +41,7 @@ function Galeria() {
 
     async function buscarDetalheObjeto() {
       const lista = [];
-      for (let index = 100000; index < 100010; index++) {
+      for (let index = 0; (index < 10 && index < dados.total); index++) {
         const id = objetos[index];
         const resposta = await api.get(`/objects/${id}`);
         lista.push(resposta.data);
