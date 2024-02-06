@@ -1,13 +1,14 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 
 import api from "../../services/apis/api-met-museum";
-import RespostaContext from "../../providers/RespostaContext";
+
+import useRespostaApi from "../../contexts/useRespostaApi";
 
 function Formulario() {
   const [termoPesquisa, setTermoPesquisa] = useState("");
   const [inputComDebounce, setInputComDebounce] = useState("");
 
-  const { alterarDados } = useContext(RespostaContext);
+  const { alterarDados } = useRespostaApi();
 
   function handlePesquisa(evento: React.ChangeEvent<HTMLInputElement>) {
     setTermoPesquisa(evento.target.value);

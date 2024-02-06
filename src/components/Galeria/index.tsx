@@ -1,9 +1,9 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 
 import Imagem from "../Imagem";
 import Container from "../Container";
 
-import RespostaContext from "../../providers/RespostaContext";
+import useRespostaApi from "../../contexts/useRespostaApi";
 
 import api from "../../services/apis/api-met-museum";
 import style from './style.module.css';
@@ -24,7 +24,7 @@ function Galeria() {
   const listaVaziaDeObjetos: ObjectResponse[] = [];
 
   const [listaDetalheObjeto, setListaDetalheObjeto] = useState(listaVaziaDeObjetos);
-  const {alterarDados, dados} = useContext(RespostaContext);
+  const {alterarDados, dados} = useRespostaApi();
 
   useEffect(() => {
     async function buscarObjetos() {
