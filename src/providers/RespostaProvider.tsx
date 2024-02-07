@@ -17,8 +17,6 @@ function RespostaProvider(props: ReactProps) {
 
   const alterarDados = (info: React.SetStateAction<RespostaInterface>) => {
     setDados(info);
-
-    console.log(info);
   }
 
   return (

@@ -5,14 +5,17 @@ import Container from './components/Container';
 import Galeria from './components/Galeria';
 
 import RespostaProvider from './providers/RespostaProvider';
+import QuantidadePorPaginaProvider from './providers/QuantidadePorPaginaProvider';
 
 function App() {
   return (
     <Container>
-      <RespostaProvider>
-        <Header />
-        <Galeria />
-      </RespostaProvider>
+      <QuantidadePorPaginaProvider>
+        <RespostaProvider>
+          <Header />
+          <Galeria />
+        </RespostaProvider>
+      </QuantidadePorPaginaProvider>
     </Container>
   );
 }
