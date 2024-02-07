@@ -6,14 +6,17 @@ import Galeria from './components/Galeria';
 
 import RespostaProvider from './providers/RespostaProvider';
 import QuantidadePorPaginaProvider from './providers/QuantidadePorPaginaProvider';
+import PaginaProvider from './providers/PaginaProvider';
 
 function App() {
   return (
     <Container>
       <QuantidadePorPaginaProvider>
         <RespostaProvider>
-          <Header />
-          <Galeria />
+          <PaginaProvider>
+            <Header />
+            <Galeria />
+          </PaginaProvider>
         </RespostaProvider>
       </QuantidadePorPaginaProvider>
     </Container>
