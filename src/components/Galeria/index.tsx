@@ -5,6 +5,7 @@ import Container from "../Container";
 
 import useRespostaApi from "../../contexts/useRespostaApi";
 import useQuantidadePagina from "../../contexts/useQuantidadePagina";
+import useAlterarPagina from "../../contexts/useAlterarPagina";
 
 import api from "../../services/apis/api-met-museum";
 import style from './style.module.css';
@@ -26,8 +27,13 @@ function Galeria() {
 
   const [listaDetalheObjeto, setListaDetalheObjeto] = useState(listaVaziaDeObjetos);
   const [exibeMensagemCarregando, setExibeMensagem] = useState(true);
+  const [paginaAtual, setPaginaAtual] = useState(1);
+  const [quantidadeDePaginas, setQuantidadeDePaginas] = useState(1);
   const { alterarDados, dados } = useRespostaApi();
   const { quantidade } = useQuantidadePagina()
+
+  const {pagina, mudarPagina} = useAlterarPagina();
+
 
   useEffect(() => {
     async function buscarObjetos() {
@@ -42,11 +48,16 @@ function Galeria() {
     const objetos = dados.objectIDs;
     if (objetos.length === 0) return;
 
+    const paginasDisponiveis = Math.ceil(dados.total / quantidade);
+    setQuantidadeDePaginas(paginasDisponiveis);
+
     async function buscarDetalheObjeto() {
       setExibeMensagem(true);
 
+      const indexInicial = (pagina - 1) * quantidade;
+
       const lista = [];
-      for (let index = 0; (index < quantidade && index < dados.total); index++) {
+      for (let index = indexInicial; (index < quantidade * pagina && index < dados.total); index++) {
         const id = objetos[index];
         const resposta = await api.get(`/objects/${id}`);
         lista.push(resposta.data);
@@ -57,7 +68,11 @@ function Galeria() {
     }
 
     buscarDetalheObjeto();
-  }, [dados, quantidade]);
+  }, [dados, quantidade, pagina]);
+
+  useEffect(() => {
+    mudarPagina(1);
+  }, [dados])
 
   return (
     <Container>
