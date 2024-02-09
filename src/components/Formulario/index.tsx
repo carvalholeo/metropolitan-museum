@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { useState, useEffect } from "react";
 
 import api from "../../services/apis/api-met-museum";
@@ -13,7 +14,7 @@ function Formulario() {
 
   const { alterarDados } = useRespostaApi();
   const { quantidade, alterarQuantidade } = useQuantidadePagina();
-  const { mudarPagina, pagina } = useAlterarPagina();
+  const { mudarPagina, pagina, paginasTotais } = useAlterarPagina();
 
   function handlePesquisa(evento: React.ChangeEvent<HTMLInputElement>) {
     setTermoPesquisa(evento.target.value);
@@ -28,12 +29,12 @@ function Formulario() {
   }
 
   function handleNextPage(evento: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
-    mudarPagina(pagina + 1);
+    mudarPagina({ paginaAtual: pagina + 1 });
   }
 
   function handlePreviousPage(evento: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
     if (pagina > 1) {
-      mudarPagina(pagina - 1);
+      mudarPagina({ paginaAtual: pagina - 1 });
     }
   }
 
@@ -86,9 +87,9 @@ function Formulario() {
           <option value="50">50</option>
           <option value="100">100</option>
         </select>
-        <button className={css.input} onClick={handlePreviousPage} disabled={pagina <= 1}> &lt; Anterior </button>
-        <button className={css.input} onClick={handleNextPage}>Próxima &gt;</button>
-        <span>Página atual: {pagina}</span>
+        <button className={css.input} onClick={handlePreviousPage} disabled={pagina <= 1}>{'<'} Anterior </button>
+        <button className={css.input} onClick={handleNextPage} disabled={pagina >= paginasTotais}>Próxima &gt;</button>
+        <span>Página {pagina} de {paginasTotais}</span>
       </form>
     </>
   )

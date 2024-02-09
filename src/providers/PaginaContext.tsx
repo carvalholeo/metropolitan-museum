@@ -1,8 +1,14 @@
-import {createContext, SetStateAction} from "react";
+import {createContext} from "react";
 
 interface QuantidadeInterface {
-  pagina: number;
-  mudarPagina: (value: SetStateAction<number>) => void;
+  pagina?: number;
+  paginasTotais?: number;
+  mudarPagina: (value: PaginaInterface) => void;
+}
+
+export interface PaginaInterface {
+  paginaAtual?: number;
+  paginasTotais?: number;
 }
 
 const defaultValues = {

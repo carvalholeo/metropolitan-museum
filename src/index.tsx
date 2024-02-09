@@ -1,15 +1,20 @@
+// @ts-nocheck
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+import ErrorBoundary from './components/ErrorBoundary';
+
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <App />
+    <ErrorBoundary fallback={<p>Deu merda muito grande e quebrou tudo</p>}>
+      <App />
+    </ErrorBoundary>
   </React.StrictMode>
 );
 

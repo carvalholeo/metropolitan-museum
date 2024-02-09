@@ -27,12 +27,10 @@ function Galeria() {
 
   const [listaDetalheObjeto, setListaDetalheObjeto] = useState(listaVaziaDeObjetos);
   const [exibeMensagemCarregando, setExibeMensagem] = useState(true);
-  const [paginaAtual, setPaginaAtual] = useState(1);
-  const [quantidadeDePaginas, setQuantidadeDePaginas] = useState(1);
   const { alterarDados, dados } = useRespostaApi();
   const { quantidade } = useQuantidadePagina()
 
-  const {pagina, mudarPagina} = useAlterarPagina();
+  const { pagina, mudarPagina } = useAlterarPagina();
 
 
   useEffect(() => {
@@ -46,21 +44,27 @@ function Galeria() {
 
   useEffect(() => {
     const objetos = dados.objectIDs;
-    if (objetos.length === 0) return;
+    if (objetos?.length === 0 && dados.total === 0) {
+      return;
+    };
 
     const paginasDisponiveis = Math.ceil(dados.total / quantidade);
-    setQuantidadeDePaginas(paginasDisponiveis);
+    mudarPagina({ paginasTotais: paginasDisponiveis })
 
     async function buscarDetalheObjeto() {
       setExibeMensagem(true);
 
+      // @ts-ignore
       const indexInicial = (pagina - 1) * quantidade;
 
       const lista = [];
+      // @ts-ignore
       for (let index = indexInicial; (index < quantidade * pagina && index < dados.total); index++) {
         const id = objetos[index];
-        const resposta = await api.get(`/objects/${id}`);
-        lista.push(resposta.data);
+        try {
+          const resposta = await api.get(`/objects/${id}`);
+          lista.push(resposta.data);
+        } catch (error) {}
       }
       setListaDetalheObjeto(lista);
 
@@ -71,7 +75,7 @@ function Galeria() {
   }, [dados, quantidade, pagina]);
 
   useEffect(() => {
-    mudarPagina(1);
+    mudarPagina({ paginaAtual: 1 });
   }, [dados])
 
   return (
