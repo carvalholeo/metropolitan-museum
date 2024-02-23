@@ -1,12 +1,13 @@
 import React from "react";
 
 import Container from "../Container";
+import Imagem from "../Imagem";
 import detalhes from './detalhes.json'
 
 function Detalhes() {
   return (
     <Container>
-      <img src={detalhes.primaryImageSmall} alt={detalhes.title} />
+      <Imagem caminho={detalhes.primaryImageSmall} texto={detalhes.title} />
       <table border={1}>
         <tr>
           <thead>
