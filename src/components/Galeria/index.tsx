@@ -83,7 +83,9 @@ function Galeria() {
       <div className={style.grade}>
         {!exibeMensagemCarregando && listaDetalheObjeto.map(objeto => {
           return (
-            <Imagem key={objeto.objectID} caminho={objeto.primaryImageSmall} texto={objeto.title} />
+            <a key={objeto.objectID} href="/detalhes">
+              <Imagem caminho={objeto.primaryImageSmall} texto={objeto.title} />
+            </a>
           );
         })}
       </div>
