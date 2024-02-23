@@ -7,6 +7,7 @@ import {
 
 import ErrorBoundary from "../components/ErrorBoundary";
 import Galeria from "../components/Galeria";
+import Detalhes from "../components/Detalhes";
 
 function Router() {
   const minhasRotas = createBrowserRouter([
@@ -14,6 +15,10 @@ function Router() {
       path: "/",
       element: <Galeria />,
       errorElement: <ErrorBoundary />
+    },
+    {
+      path: '/detalhes',
+      element: <Detalhes />
     }
   ]);
 
