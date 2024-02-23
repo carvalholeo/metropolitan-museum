@@ -10,16 +10,24 @@ import useAlterarPagina from "../../contexts/useAlterarPagina";
 import api from "../../services/apis/api-met-museum";
 import style from './style.module.css';
 
-interface ObjectResponse {
+export interface ObjectResponse {
   objectID: number;
   isHighlight: boolean;
   accessionYear: string;
   primaryImage?: string;
   primaryImageSmall?: string;
   additionalImages?: string[];
+  measurements?: {
+    elementMeasurements: {
+      Height: number;
+      Width: number
+    }
+  }[]
   constituents: string[];
   department: string;
   title: string;
+  objectEndDate?: string | number;
+  artistDisplayName?: string;
 }
 
 function Galeria() {
@@ -83,7 +91,7 @@ function Galeria() {
       <div className={style.grade}>
         {!exibeMensagemCarregando && listaDetalheObjeto.map(objeto => {
           return (
-            <a key={objeto.objectID} href="/detalhes">
+            <a key={objeto.objectID} href={'/detalhes/' + objeto.objectID}>
               <Imagem caminho={objeto.primaryImageSmall} texto={objeto.title} />
             </a>
           );

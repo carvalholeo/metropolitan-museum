@@ -17,8 +17,9 @@ function Router() {
       errorElement: <ErrorBoundary />
     },
     {
-      path: '/detalhes',
-      element: <Detalhes />
+      path: '/detalhes/:object_id',
+      element: <Detalhes />,
+      errorElement: <ErrorBoundary />
     }
   ]);
 
