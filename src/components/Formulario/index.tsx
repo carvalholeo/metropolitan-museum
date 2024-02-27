@@ -7,6 +7,7 @@ import css from './style.module.css';
 import useRespostaApi from "../../contexts/useRespostaApi";
 import useQuantidadePagina from "../../contexts/useQuantidadePagina";
 import useAlterarPagina from "../../contexts/useAlterarPagina";
+import useDepartamento from "../../contexts/useDepartamento";
 
 function Formulario() {
   const [termoPesquisa, setTermoPesquisa] = useState("");
@@ -15,6 +16,7 @@ function Formulario() {
   const { alterarDados } = useRespostaApi();
   const { quantidade, alterarQuantidade } = useQuantidadePagina();
   const { mudarPagina, pagina, paginasTotais } = useAlterarPagina();
+  const { departmentId } = useDepartamento()
 
   function handlePesquisa(evento: React.ChangeEvent<HTMLInputElement>) {
     setTermoPesquisa(evento.target.value);
@@ -56,14 +58,15 @@ function Formulario() {
     async function pesquisarApi() {
       const { data } = await api.get('search', {
         params: {
-          q: inputComDebounce
+          q: inputComDebounce,
+          departmentsId: departmentId
         }
       });
       alterarDados(data);
     }
 
     pesquisarApi();
-  }, [inputComDebounce]);
+  }, [inputComDebounce, departmentId]);
 
   return (
     <>

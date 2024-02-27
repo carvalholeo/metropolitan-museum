@@ -7,6 +7,7 @@ import Container from "../Container";
 import useRespostaApi from "../../contexts/useRespostaApi";
 import useQuantidadePagina from "../../contexts/useQuantidadePagina";
 import useAlterarPagina from "../../contexts/useAlterarPagina";
+import useDepartamento from "../../contexts/useDepartamento";
 
 import api from "../../services/apis/api-met-museum";
 import style from './style.module.css';
@@ -40,16 +41,21 @@ function Galeria() {
   const { quantidade } = useQuantidadePagina()
 
   const { pagina, mudarPagina } = useAlterarPagina();
+  const { departmentId } = useDepartamento();
 
 
   useEffect(() => {
     async function buscarObjetos() {
-      const resposta = await api.get('/objects');
+      const resposta = await api.get('/objects', {
+        params: {
+          departmentIds: departmentId,
+        }
+      });
 
       alterarDados(resposta.data);
     }
     buscarObjetos();
-  }, []);
+  }, [departmentId]);
 
   useEffect(() => {
     const objetos = dados.objectIDs;

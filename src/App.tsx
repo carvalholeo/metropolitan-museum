@@ -9,6 +9,7 @@ import Router from './routes/router';
 import RespostaProvider from './providers/RespostaProvider';
 import QuantidadePorPaginaProvider from './providers/QuantidadePorPaginaProvider';
 import PaginaProvider from './providers/PaginaProvider';
+import DepartamentoProvider from './providers/DepartamentoProvider';
 
 function App() {
   return (
@@ -16,8 +17,10 @@ function App() {
       <QuantidadePorPaginaProvider>
         <RespostaProvider>
           <PaginaProvider>
-            <Header />
-            <Router />
+            <DepartamentoProvider>
+              <Header />
+              <Router />
+            </DepartamentoProvider>
           </PaginaProvider>
         </RespostaProvider>
       </QuantidadePorPaginaProvider>
