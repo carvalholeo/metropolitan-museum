@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from 'react-router-dom';
 
 import Imagem from "../Imagem";
 import Container from "../Container";
@@ -91,9 +92,9 @@ function Galeria() {
       <div className={style.grade}>
         {!exibeMensagemCarregando && listaDetalheObjeto.map(objeto => {
           return (
-            <a key={objeto.objectID} href={'/detalhes/' + objeto.objectID}>
+            <Link key={objeto.objectID} to={'/detalhes/' + objeto.objectID}>
               <Imagem caminho={objeto.primaryImageSmall} texto={objeto.title} />
-            </a>
+            </Link>
           );
         })}
       </div>

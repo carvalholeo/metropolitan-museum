@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { useParams, redirect, redirectDocument } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 import Container from "../Container";
 import Imagem from "../Imagem";
+
+import style from './style.module.css';
 
 import api from "../../services/apis/api-met-museum";
 
@@ -49,9 +51,9 @@ function Detalhes() {
 
   return (
     <Container>
-      <Container>
+      <div className={style.detalhes}>
         <Imagem caminho={respostaApi.primaryImage} texto={respostaApi.title} />
-      </Container>
+      </div>
       <table border={1}>
         <thead>
           <tr>
