@@ -1,4 +1,4 @@
-import React from "react";
+import { createContext ,SetStateAction} from "react";
 
 export interface RespostaInterface {
   total: number;
@@ -7,7 +7,7 @@ export interface RespostaInterface {
 
 interface DadosInterface {
   dados: RespostaInterface;
-  alterarDados: (value: React.SetStateAction<RespostaInterface>) => void;
+  alterarDados: (value: SetStateAction<RespostaInterface>) => void;
 }
 
 const valoresPadrao = {
@@ -18,6 +18,6 @@ const valoresPadrao = {
   alterarDados: (_: unknown) => { return }
 }
 
-const RespostaContext = React.createContext<DadosInterface>(valoresPadrao);
+const RespostaContext = createContext<DadosInterface>(valoresPadrao);
 
 export default RespostaContext;

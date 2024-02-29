@@ -1,10 +1,13 @@
-import {createContext} from "react";
+import { createContext } from "react";
 
 interface QuantidadeInterface {
   pagina?: number;
   paginasTotais?: number;
   mudarPagina: (value: PaginaInterface) => void;
 }
+
+// HOstinger = empresa de hospedagem (hosting)
+// Hoisting = içamento (puxar as declarações de funções pro começo)
 
 export interface PaginaInterface {
   paginaAtual?: number;

@@ -1,11 +1,11 @@
-import React from 'react';
+import { ReactNode, SetStateAction, useState } from 'react';
 
 import RespostaContext from './RespostaContext';
 
 import { RespostaInterface } from './RespostaContext';
 
 interface ReactProps {
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 function RespostaProvider(props: ReactProps) {
@@ -13,9 +13,9 @@ function RespostaProvider(props: ReactProps) {
     total: 0,
     objectIDs: []
   };
-  const [dados, setDados] = React.useState(resposta);
+  const [dados, setDados] = useState(resposta);
 
-  const alterarDados = (info: React.SetStateAction<RespostaInterface>) => {
+  const alterarDados = (info: SetStateAction<RespostaInterface>) => {
     setDados(info);
   }
 

@@ -1,5 +1,5 @@
 // @ts-nocheck
-import React, { useState, useEffect } from "react";
+import { useState, useEffect, ChangeEvent, FormEvent, MouseEvent } from "react";
 
 import api from "../../services/apis/api-met-museum";
 import css from './style.module.css';
@@ -18,23 +18,23 @@ function Formulario() {
   const { mudarPagina, pagina, paginasTotais } = useAlterarPagina();
   const { departmentId } = useDepartamento()
 
-  function handlePesquisa(evento: React.ChangeEvent<HTMLInputElement>) {
+  function handlePesquisa(evento: ChangeEvent<HTMLInputElement>) {
     setTermoPesquisa(evento.target.value);
   }
 
-  function handleSubmit(evento: React.FormEvent<HTMLFormElement>) {
+  function handleSubmit(evento: FormEvent<HTMLFormElement>) {
     evento.preventDefault();
   }
 
-  function handleChangeQuantity(evento: React.ChangeEvent<HTMLSelectElement>) {
+  function handleChangeQuantity(evento: ChangeEvent<HTMLSelectElement>) {
     alterarQuantidade(parseInt(evento.target.value));
   }
 
-  function handleNextPage(evento: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
+  function handleNextPage(evento: MouseEvent<HTMLButtonElement, MouseEvent>) {
     mudarPagina({ paginaAtual: pagina + 1 });
   }
 
-  function handlePreviousPage(evento: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
+  function handlePreviousPage(evento: MouseEvent<HTMLButtonElement, MouseEvent>) {
     if (pagina > 1) {
       mudarPagina({ paginaAtual: pagina - 1 });
     }

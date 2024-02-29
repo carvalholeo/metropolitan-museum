@@ -1,5 +1,3 @@
-import React from "react";
-
 import style from './style.module.css';
 import semImagem from './sem-imagem.jpg';
 
