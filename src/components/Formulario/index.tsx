@@ -1,5 +1,7 @@
 // @ts-nocheck
 import { useState, useEffect, ChangeEvent, FormEvent, MouseEvent } from "react";
+import { FaLongArrowAltRight, FaLongArrowAltLeft } from "react-icons/fa";
+import { IoSearch } from "react-icons/io5";
 
 import api from "../../services/apis/api-met-museum";
 import css from './style.module.css';
@@ -71,7 +73,7 @@ function Formulario() {
   return (
     <>
       <form onSubmit={handleSubmit} className={css.form}>
-        <label htmlFor="pesquisa" className={css.input}>Pesquisar</label>
+        <label htmlFor="pesquisa" className={css.input}>Pesquisar <IoSearch /></label>
         <input
           type="search"
           name="pesquisa"
@@ -90,8 +92,21 @@ function Formulario() {
           <option value="50">50</option>
           <option value="100">100</option>
         </select>
-        <button className={css.input} onClick={handlePreviousPage} disabled={pagina <= 1}>{'<'} Anterior </button>
-        <button className={css.input} onClick={handleNextPage} disabled={pagina >= paginasTotais}>Próxima &gt;</button>
+        <button
+          className={css.input}
+          onClick={handlePreviousPage}
+          disabled={pagina <= 1}
+        >
+          <FaLongArrowAltLeft />
+        </button>
+
+        <button
+          className={css.input}
+          onClick={handleNextPage}
+          disabled={pagina >= paginasTotais}
+        >
+          <FaLongArrowAltRight />
+        </button>
         <span>Página {pagina} de {paginasTotais}</span>
       </form>
     </>
