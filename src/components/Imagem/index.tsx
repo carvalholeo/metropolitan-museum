@@ -13,6 +13,7 @@ function Imagem({ caminho, texto }: ImagemProps) {
       alt={texto}
       title={texto}
       className={style["imagem-na-grade"]}
+      loading='lazy'
     />
   );
 }
