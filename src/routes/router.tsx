@@ -1,5 +1,5 @@
 import {
-  createBrowserRouter,
+  createHashRouter,
   RouterProvider,
 } from "react-router-dom";
 
@@ -9,7 +9,7 @@ import Galeria from "../components/Galeria";
 import Detalhes from "../components/Detalhes";
 
 function Router() {
-  const minhasRotas = createBrowserRouter([
+  const minhasRotas = createHashRouter([
     {
       path: "/",
       element: <Galeria />,
@@ -20,7 +20,7 @@ function Router() {
       element: <Detalhes />,
       errorElement: <ErrorBoundary />
     }
-  ]);
+  ], { basename: '/'});
 
   return (
     <RouterProvider router={minhasRotas} />
